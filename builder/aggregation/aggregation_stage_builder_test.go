@@ -487,8 +487,8 @@ func TestStageBuilder_Unwind(t *testing.T) {
 }
 
 func TestStageBuilder_ReplaceRoot(t *testing.T) {
-	assert.Equal(t, mongo.Pipeline{bson.D{bson.E{Key: "$replaceRoot", Value: bson.E{Key: "newRoot", Value: "cities"}}}}, NewStageBuilder().ReplaceRoot("cities").Build())
-	assert.Equal(t, mongo.Pipeline{bson.D{bson.E{Key: "$replaceRoot", Value: bson.E{Key: "newRoot", Value: bson.E{Key: "$mergeObjects", Value: []string{"cities", "countries"}}}}}}, NewStageBuilder().ReplaceRoot(bson.E{Key: "$mergeObjects", Value: []string{"cities", "countries"}}).Build())
+	assert.Equal(t, mongo.Pipeline{bson.D{bson.E{Key: "$replaceRoot", Value: bson.D{{Key: "newRoot", Value: "cities"}}}}}, NewStageBuilder().ReplaceRoot("cities").Build())
+	assert.Equal(t, mongo.Pipeline{bson.D{bson.E{Key: "$replaceRoot", Value: bson.D{{Key: "newRoot", Value: bson.D{{Key: "$mergeObjects", Value: []string{"cities", "countries"}}}}}}}}, NewStageBuilder().ReplaceRoot(bson.D{{Key: "$mergeObjects", Value: []string{"cities", "countries"}}}).Build())
 }
 
 func TestStageBuilder_ReplaceWith(t *testing.T) {
