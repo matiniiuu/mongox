@@ -95,6 +95,8 @@ const (
 	StageOutputOp      = "output"
 	StageProjectOp     = "$project"
 	StageReplaceWithOp = "$replaceWith"
+	StageReplaceRootOp = "$replaceRoot"
+	StageNewRootOp     = "newRoot"
 	StageSetOp         = "$set"
 	StageSkipOp        = "$skip"
 	StageSortByCountOp = "$sortByCount"

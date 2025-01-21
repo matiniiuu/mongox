@@ -105,6 +105,11 @@ func (b *StageBuilder) Unwind(path string, opt *UnWindOptions) *StageBuilder {
 	return b
 }
 
+func (b *StageBuilder) ReplaceRoot(newRoot any) *StageBuilder {
+	b.pipeline = append(b.pipeline, bson.D{{Key: StageReplaceRootOp, Value: bson.E{Key: StageNewRootOp, Value: newRoot}}})
+	return b
+}
+
 func (b *StageBuilder) ReplaceWith(replacementDocument any) *StageBuilder {
 	b.pipeline = append(b.pipeline, bson.D{{Key: StageReplaceWithOp, Value: replacementDocument}})
 	return b
