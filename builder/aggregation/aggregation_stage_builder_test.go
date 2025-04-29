@@ -722,26 +722,24 @@ func TestStageBuilder_Lookup(t *testing.T) {
 func TestStageBuilder_UnionWith(t *testing.T) {
 	testCases := []struct {
 		name     string
-		col      string
+		coll     string
 		pipeline mongo.Pipeline
 
 		want mongo.Pipeline
 	}{
 		{
 			name:     "basic",
-			col:      "orders",
+			coll:     "orders",
 			pipeline: mongo.Pipeline{},
 			want: mongo.Pipeline{
 				{
-					bson.E{Key: "$unionWith", Value: bson.D{
-						bson.E{Key: "col", Value: "orders"},
-					}},
+					bson.E{Key: "$unionWith", Value: "orders"},
 				},
 			},
 		},
 		{
 			name: "advanced case",
-			col:  "orders",
+			coll: "orders",
 			pipeline: mongo.Pipeline{
 				{
 					bson.E{Key: "$match", Value: bson.D{bson.E{Key: "$expr", Value: bson.D{bson.E{Key: "$and", Value: []any{
@@ -753,7 +751,7 @@ func TestStageBuilder_UnionWith(t *testing.T) {
 			want: mongo.Pipeline{
 				{
 					bson.E{Key: "$unionWith", Value: bson.D{
-						bson.E{Key: "col", Value: "orders"},
+						bson.E{Key: "coll", Value: "orders"},
 						bson.E{Key: "pipeline", Value: mongo.Pipeline{
 							{
 								bson.E{Key: "$match", Value: bson.D{bson.E{Key: "$expr", Value: bson.D{bson.E{Key: "$and", Value: []any{
@@ -770,7 +768,7 @@ func TestStageBuilder_UnionWith(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			assert.Equal(t, tc.want, NewStageBuilder().UnionWith(tc.col, tc.pipeline).Build())
+			assert.Equal(t, tc.want, NewStageBuilder().UnionWith(tc.coll, tc.pipeline).Build())
 		})
 	}
 }
