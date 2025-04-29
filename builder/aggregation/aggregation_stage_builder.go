@@ -147,6 +147,14 @@ func (b *StageBuilder) Lookup(from, as string, opt *LookUpOptions) *StageBuilder
 	return b
 }
 
+func (b *StageBuilder) UnionWith(col string, pipeline mongo.Pipeline) *StageBuilder {
+	d := bson.D{bson.E{Key: "col", Value: col}}
+	if len(pipeline) != 0 {
+		d = append(d, bson.E{Key: "pipeline", Value: pipeline})
+	}
+	b.pipeline = append(b.pipeline, bson.D{bson.E{Key: StageUnionWith, Value: d}})
+	return b
+}
 func (b *StageBuilder) Build() mongo.Pipeline {
 	return b.pipeline
 }

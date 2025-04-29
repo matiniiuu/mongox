@@ -91,6 +91,7 @@ const (
 	StageGroupOp       = "$group"
 	StageLimitOp       = "$limit"
 	StageLookUpOp      = "$lookup"
+	StageUnionWith     = "$unionWith"
 	StageMatchOp       = "$match"
 	StageOutputOp      = "output"
 	StageProjectOp     = "$project"
